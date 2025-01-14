@@ -47,11 +47,12 @@ class Tela:
     def buscarCliente(self):
         banco = InformacoesBanco()
         dados = self.input_codigo_cliente_dado.get('1.0', 'end').split('\n')
+        print(dados)
         if self.codigo_cliente_variavel != dados[0]:
             self.reiniciarTudo()
-            self.setCodigoCliente(dados[0])
             self.alterarNomeCliente(self.codigo_cliente_variavel)
-            print(self.codigo_cliente_variavel)
+            self.setCodigoCliente(dados[0])
+            print("codigo" + self.codigo_cliente_variavel)
             retorno_banco = banco.cliente(dados[0])
             return retorno_banco
         else:
@@ -68,7 +69,7 @@ class Tela:
         except Exception as e:
             print("Não foi possivel alterar o nome do cliente! Atribuindo valor padrão", e)
             self.alterarNomeCliente('Indisponivel')
-        self.alterarCodigoCliente()
+            self.alterarCodigoCliente()
         try:
             self.alterarFantasiaCliente(fantasia)
         except Exception as e:
@@ -121,6 +122,7 @@ class Tela:
         self.razao_social_dado.configure(state='disable')
     
     def alterarCodigoCliente(self):
+        print("codigo alterar codigo cliente" + self.codigo_cliente_variavel)
         self.codigo_cliente_dado.configure(state='normal')
         self.codigo_cliente_dado.delete('1.0', 'end')
         self.codigo_cliente_dado.insert('1.0', self.codigo_cliente_variavel)
@@ -526,6 +528,9 @@ class Tela:
             pdf.salvarPDF()
             self.atualizarNumeroDocumento()
             self.reiniciarTudo()
+            self.codigo_cliente_variavel = ''
+            self.alterarCodigoCliente()
+            self.alterarCodigoClienteInput()
             self.numero_documento = f'{self.lerNumeroDocumento()}/{self.ano}'
         except:
             print('Erro ao gerar PDF')
@@ -540,7 +545,7 @@ class Tela:
         self.janela_confirmar_exclusao.destroy()
     
     def reiniciarTudo(self):
-        self.codigo_cliente_variavel = ''
+        # self.codigo_cliente_variavel = ''
         self.cliente = []
         self.numero_pedido_variavel = []
         self.produtos_selecionados = []
@@ -555,8 +560,8 @@ class Tela:
         self.obs_dado.config(background='#ffffff')
 
         self.alterarNomeCliente('')
-        self.alterarCodigoCliente()
-        self.alterarCodigoClienteInput()
+        # self.alterarCodigoCliente()
+        # self.alterarCodigoClienteInput()
         self.alterarFantasiaCliente('')
         self.alterarEnderecoCliente('')
         self.alterarBairroCliente('')

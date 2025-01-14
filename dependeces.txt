@@ -1,0 +1,4 @@
+cx_oracle
+reportlab
+tkcalendar
+cx_Freeze

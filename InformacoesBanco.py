@@ -36,7 +36,14 @@ class InformacoesBanco:
         conn = self.__conector()
         conn.execute(
             """
-            SELECT p.cliente, p.fantasia, p.endercob, p.bairrocob, p.municcob, pp.praca, pp.rota 
+            SELECT 
+                p.cliente, 
+                nvl(p.fantasia,'Sem cadastro') fantasia, 
+                nvl(p.enderent,'Sem cadastro') endercob, 
+                nvl(p.bairroent,'Sem cadastro') bairrocob, 
+                nvl(p.municent,'Sem cadastro') municcob, 
+                nvl(pp.praca,'Sem cadastro') praca, 
+                pp.rota
             FROM pcpraca pp JOIN pcclient p ON pp.codpraca = p.codpraca 
             WHERE p.codcli = :cod_cliente
             """, cod_cliente=cod_cliente)
